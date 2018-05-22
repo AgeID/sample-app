@@ -37,8 +37,7 @@
             retryInterval: {{$retryInterval}},                  // optional
             activePanel  : 'login',                             // optional
             prefillEmail : '',                                  // optional
-            ageIdUrl     : '{{$ageIdUrl}}',                     // for non-production
-            clientUrl    : '{{config('app.url')}}'              //mandatory, used for redirecting the user back to client's site after account creation and registering
+            ageIdUrl     : '{{$ageIdUrl}}'                     // for non-production
         });
         $("#ageIdModal").modal({
             backdrop: 'static',
