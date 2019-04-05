@@ -22,5 +22,5 @@ return [
     'retryInterval'     => env('AGEID_RETRY_INTERVAL', 10),
     'EncryptionKey'     => env('AGEID_KEY'),
     'TimeoutInMinutes'  => env('AGEID_TIMEOUT', 60),
-
+    'version'           => env('AGEID_VERSION', 'v2'),
 ];

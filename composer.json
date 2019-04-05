@@ -5,7 +5,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "ageid/encryption-helper": "^1.0",
+        "ageid/encryption-helper": "^2.0",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "6.*",
         "laravel/framework": "5.5.*",

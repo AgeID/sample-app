@@ -9,6 +9,22 @@ class PayloadEncrypter implements Encrypter
     /** @var string */
     protected $key;
 
+    /** @var string */
+    protected $cipher;
+
+
+    /**
+     * Create a new encrypter instance.
+     *
+     * @param string $cipher
+     */
+    public function __construct($cipher = 'AES-256-CBC')
+    {
+        $this->cipher = $cipher;
+
+
+    }
+
     /**
      * @param string $key
      *
@@ -25,38 +41,36 @@ class PayloadEncrypter implements Encrypter
      * Encrypt the given value.
      *
      * @param  string $value
-     * @param  bool   $serialize
+     * @param  bool   $json
      *
-     * @throws \AgeId\AgeIdException
      * @return string
      */
-    public function encrypt($value, $serialize = true): string
+    public function encrypt($value, $json = true): string
     {
 
-        $encrypter = new EncryptionHelper($this->key);
+        $encrypter = new EncryptionHelper($this->key, null, \Config::get('ageId.version'));
 
-        if ($serialize) $value = serialize($value);
+        if ($json) $value = json_encode($value);
         $encrypted = $encrypter->encrypt($value);
+
         return urlencode($encrypted);
     }
 
-
-     /**
+    /**
      * Decrypt the given value.
      *
      * @param  string $payload
-     * @param  bool   $unserialize
+     * @param  bool   $json
      *
-     * @throws \AgeId\AgeIdException
      * @return mixed
      */
-    public function decrypt($payload, $unserialize = true)
+    public function decrypt($payload, $json = true)
     {
-        $decrypter = new EncryptionHelper($this->key);
+        $decrypter = new EncryptionHelper($this->key, null, \Config::get('ageId.version'));
         $decrypted = $decrypter->decrypt($payload);
 
+        if ($json) $decrypted = json_decode($decrypted, true);
 
-        if ($unserialize) $decrypted = unserialize($decrypted);
         return $decrypted;
 
     }

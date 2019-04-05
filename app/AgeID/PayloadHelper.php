@@ -37,7 +37,7 @@ class PayloadHelper
     public function generateWithCode(string $code, string $ip): string
     {
         return $this->payloadEncrypter->encrypt([
-            'expires_at'=> Carbon::now()->addMinutes($this->timeout),
+            'expires_at'=> Carbon::now()->addMinutes($this->timeout)->format('Y-m-d H:i:s'),
             'user_addr' => $ip,
             'code'      => $code
         ]);
@@ -50,7 +50,7 @@ class PayloadHelper
     public function generateWithToken(string $token): string
     {
         return $this->payloadEncrypter->encrypt([
-            'expires_at' => Carbon::now()->addMinutes($this->timeout),
+            'expires_at' => Carbon::now()->addMinutes($this->timeout)->format('Y-m-d H:i:s'),
             'token'      => $token
         ]);
     }
@@ -61,7 +61,7 @@ class PayloadHelper
     public function generateForRedirectHandshake(): string
     {
         return $this->payloadEncrypter->encrypt([
-            'expires_at' => Carbon::now()->addMinutes($this->timeout),
+            'expires_at' => Carbon::now()->addMinutes($this->timeout)->format('Y-m-d H:i:s'),
             'redirect_uri' => \Config::get('ageId.redirectURL')
         ]);
     }
@@ -72,7 +72,7 @@ class PayloadHelper
     public function generateForModalHandshake(): string
     {
         return $this->payloadEncrypter->encrypt([
-            'expires_at' => Carbon::now()->addMinutes($this->timeout),
+            'expires_at' => Carbon::now()->addMinutes($this->timeout)->format('Y-m-d H:i:s'),
         ]);
     }
 
