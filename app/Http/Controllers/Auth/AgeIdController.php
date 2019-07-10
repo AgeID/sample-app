@@ -48,26 +48,31 @@ class AgeIdController extends Controller
 
     public function callbackRedirect(Request $request)
     {
-        $payloadHelper = new PayloadEncrypter();
-        $payloadHelper->useKey(config('ageId.EncryptionKey'));
+        $ageIdApiWrapper = new AgeIdApiWrapper();
         $status = '';
 
         if ($request->has('error') && $request->get('error') == 'unauthorized')
             return redirect()->route('redirect.ageid');
 
-        if ($request->get("payload")) {
-            $status = $payloadHelper->decrypt($request->get("payload"))["status"];
-            if ($status == "verified") {
-                session(['ageId' => ['status' => $status]]);
-            } else {
+        try{
+            if ($request->has('code')) {
+                $ageIdResponse = $ageIdApiWrapper->callWithCode($request->get('code'), $this->getIp());
+                $status = $ageIdResponse['status'];
+
                 session()->forget('ageId');
+                session()->put('ageId', $ageIdResponse);
+
+                if ($ageIdResponse['status'] == "verified") {
+                    return redirect()->route("home");
+                }
             }
+        } catch(\Exception $e) {
             return redirect()->route("home");
         }
 
         return view('redir', [
             'ageIdUrl' => \Config::get('ageId.baseURL'),
-            'error' => $request->get("error"),
+            'error' => $request->get('error'),
             'status' => $status
         ]);
     }
@@ -135,7 +140,8 @@ class AgeIdController extends Controller
         return view('no-script-unauthorized');
     }
 
-    protected function getIp() {
+    protected function getIp()
+    {
         if( env('NAT_OUTBOUND_IP') ) {
             return env('NAT_OUTBOUND_IP');
         }

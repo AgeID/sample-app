@@ -42,7 +42,7 @@ You need to set the following parameters:
 |AGEID_CALLBACK_URL | Callback url set as _APP_URL_/ageIdCallback E.g. http://localhost/ageIdCallback
 |AGEID_REDIRECT_URL | Redirect url set as _APP_URL_/ageIdRedirectCallback E.g. http://localhost/ageIdRedirectCallback
 |AGEID_TIMEOUT      | Timeout in minutes while is waiting for verification. Default: 60
-
+|NAT_OUTBOUND_IP      | Set your outbound IP if you are running the app inside a container. This ensure that AgeID will see your correct public IP.
 
 
     

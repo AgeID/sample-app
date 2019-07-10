@@ -28,11 +28,10 @@
         </div>
         @yield('footer')
         <script src="{{ asset('js/app.js') }}"></script>
-        <noscript>
-            <style>
-                .btn-group {display:none;}
-            </style>
-        </noscript>
+
+        <script>
+            $('.btn-group-justified').show();
+        </script>
         @yield('page-script')        
     </body>
 </html>

@@ -1,39 +1,53 @@
 @extends('layout1')
 
 @section('content')
-    SFW Page
-@endsection
-
-@section('footer')
-<div id="ageIdModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id="ageid-frontdesk" class="modal-body"></div>
-        </div>
+    <div class="row">
+        <h1 class="col-xs-12 title">SFW Page</h1>
     </div>
-</div>
-@endsection
-@section('page-script')
-    <script type="text/javascript">
-    @if( $error == "unauthorized" )
-        alert('Authentication failed: {{$error}}' );
-        window.location.href = '{{$ageIdUrl}}/login?client_url={{ route('home') }}';
-
-    @endif
-    @if( $error != "unauthorized" && $error != "" )
-            alert('Client internal message error:{{$error}}' );
-    @endif
-    @if( $status == "unverified" )
-       alert('You need to verify your account before being able to access our content');
-       window.location.href = '{{$ageIdUrl}}';
-    @endif
-    @if( $status == "unauthorized" )
-        alert('You need to login / create on account on ageid.com');
-        window.location.href = '{{$ageIdUrl}}/login';
-    @endif
-    @if( $status == "verified" )
-        alert('You are allowed to access our content');
-        window.location.href = '{{route('home')}}';;
-    @endif
-    </script>
+    {{--<noscript>--}}
+    <div class="row no-script">
+        @if( $error == "unauthorized" )
+            <div class="col-xs-12 message">
+                Authentication failed: {{$error}}
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="{{$ageIdUrl}}/login?client_url={{ route('home') }}" class="btn btn-primary">Login AgeID</a>
+            </div>
+        @endif
+        @if( $error != "unauthorized" && $error != "" )
+            <div class="col-xs-12 message">
+                Client internal message error:{{$error}}
+            </div>
+        @endif
+        @if( $status == "unverified" )
+            <div class="col-xs-12 message">
+                You need to verify your account before being able to access our content
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="{{$ageIdUrl}}?client_url={{route('redirect.ageid.handshake') }}" class="btn btn-primary">Verify on AgeID</a>
+            </div>
+        @elseif( $status == "unauthorized" )
+            <div class="col-xs-12 message">
+                You need to login / create on account on ageid.com
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="{{$ageIdUrl}}" class="btn btn-primary">AgeID</a>
+            </div>
+        @elseif( $status == "emailactivation" )
+            <div class="col-xs-12 message">
+                You need to activate your email
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="{{$ageIdUrl}}" class="btn btn-primary">Visit AgeID</a>
+            </div>
+        @else
+            <div class="col-xs-12 message">
+                There's an issue with your account, go to <b>AgeID</b> for more info.
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="{{$ageIdUrl}}" class="btn btn-primary">Visit AgeID</a>
+            </div>
+        @endif
+    </div>
+    {{--</noscript>--}}
 @endsection

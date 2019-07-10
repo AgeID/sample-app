@@ -1,18 +1,17 @@
 @extends('layout1')
-
-@section('content')
-
-    <div class="btn-group btn-group-justified" role="group" aria-label="..." style="position: absolute;top: 0;left: 0;z-index: 2000;">
-        <div class="btn-group" role="group">
-            <a href="?type=ageidOnload" type="button" class="btn btn-default {{$type == 'ageidOnload' ? 'active' : 'false'}}">AgeID modal on page load</a>
-        </div>
-        <div class="btn-group" role="group">
-            <a href="?type=ageidOnAction" type="button" class="btn btn-default {{$type == 'ageidOnAction' ? 'active' : 'false'}}">AgeID modal on button action</a>
-        </div>
-        <div class="btn-group" role="group">
-            <a href="?type=ageidOnLoadAndAction" type="button" class="btn btn-default {{$type == 'ageidOnLoadAndAction' ? 'active' : 'false'}}">AgeID modal on page load and button action</a>
-        </div>
+<div class="btn-group btn-group-justified" role="group" aria-label="..." style="    position: relative;
+    z-index: 2000; display: none;">
+    <div class="btn-group" role="group">
+        <a href="?type=ageidOnload" type="button" class="btn btn-default {{$type == 'ageidOnload' ? 'active' : 'false'}}">AgeID modal on page load</a>
     </div>
+    <div class="btn-group" role="group">
+        <a href="?type=ageidOnAction" type="button" class="btn btn-default {{$type == 'ageidOnAction' ? 'active' : 'false'}}">AgeID modal on button action</a>
+    </div>
+    <div class="btn-group" role="group">
+        <a href="?type=ageidOnLoadAndAction" type="button" class="btn btn-default {{$type == 'ageidOnLoadAndAction' ? 'active' : 'false'}}">AgeID modal on page load and button action</a>
+    </div>
+</div>
+@section('content')
     <div class="row">
         <h1 class="col-xs-12 title">SFW Page</h1>
 
@@ -79,7 +78,7 @@
 
     var ageidOnAction = function () {
         initAgeId();
-        var ageidButton = document.querySelector('#ageid-verify');
+        var ageidButton = document.querySelector('#ageIdVerify');
         ageidButton.addEventListener("click", function(){
             $("#ageIdModal").modal({
                 keyboard: false
